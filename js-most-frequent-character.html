@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="output">default</div>
+
+    <script>
+        function getMostFrequentCharacter(characters) {
+            var char_map = [];
+            var most_frequent_char = "x";
+            var amount = 0;
+            for (var i = 0; i < characters.length; i++) {
+                var currentChar = characters.charAt(i);
+                if (!char_map[currentChar]) {
+                    char_map[currentChar] = 0;
+                }
+                char_map[currentChar] += 1;
+            }
+            for (var char in char_map) {
+                if (char_map[char] > amount) {
+                    amount = char_map[char];
+                    most_frequent_char = char;
+                }
+            }
+            return most_frequent_char + " " + amount;
+        }
+
+        var characters = "rrasdasdsddasffffffdasdsfgsdfgasdfegrgearg";
+
+        document.getElementById('output').innerHTML = getMostFrequentCharacter(characters); 
+    </script>
+</body>
+
+</html>
