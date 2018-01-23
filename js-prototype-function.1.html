@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="output">default</div>
+
+    <script>
+        o = {};
+
+        o.__proto__={
+            say:function(append){
+              return append + " world";
+          }
+        }
+        
+        document.getElementById('output').innerHTML = o.say("Moin");
+    </script>
+</body>
+
+</html>
