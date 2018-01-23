@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script>
+        'use strict';
+        let app = angular.module('app', []);
+
+        app.service('gradeService', function ($http) {
+            this.getData = function (callbackFunc) {
+                $http({
+                    method: "GET",
+                    url: "/grades"
+                }).then(
+                        function mySuccess(response) {
+                            callbackFunc(response.data);
+                        },
+                        function myError(response) {
+                            Console.log(response.statusText);
+                        }
+                    );
+            }
+        })
+
+        app.controller('grades-controller', function ($scope, gradeService) {
+            $scope.data = [];
+
+            $scope.getGrades = function () {
+                gradeService.getData(function (dataResponse) {
+                    $scope.data = dataResponse;
+                })
+            }
+        })
+    </script>
+</head>
+
+<body>
+
+    <div ng-app="app">
+        <h2>Grades</h2>
+        <div ng-controller="grades-controller">
+
+            <div ng-repeat="elem in data">
+                {{'{{elem.name}}'}} {{'{{elem.grade}}'}}
+            </div>
+            <input type="button" ng-click="getGrades();" value="Show Grades">
+        </div>
+    </div>
+
+</body>
+
+</html>
