@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="output">default</div>
+
+    <script>
+        function getAverageHeightOfMale(data) {
+            var heights = data.filter(x => x.gender === 'M')
+                .map(x => x.height);
+            return heights.reduce((x, y) => x + y) / heights.length;
+        }
+
+        var data = [
+            {
+                name: 'Anna',
+                height: 168,
+                gender: 'F'
+            },
+            {
+                name: 'Boris',
+                height: 178,
+                gender: 'M'
+            },
+            {
+                name: 'Denise',
+                height: 176,
+                gender: 'F'
+            }, {
+                name: 'Caesar',
+                height: 172,
+                gender: 'M'
+            }];
+
+        document.getElementById('output').innerHTML = getAverageHeightOfMale(data); 
+    </script>
+</body>
+
+</html>
