@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="output">default</div>
+
+    <script>
+        function usesThat(name) {
+            var that = this;
+            this.myName = name;
+
+            function returnMe() {
+                return that;
+            }
+
+            return {
+                returnMe: returnMe
+            }
+        }
+
+        var usesThat = new usesThat('Peet');
+        document.getElementById('output').innerHTML = usesThat.returnMe().myName;
+    </script>
+</body>
+
+</html>
