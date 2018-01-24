@@ -13,13 +13,36 @@
                     method: "GET",
                     url: "/grades"
                 }).then(
-                        function mySuccess(response) {
-                            callbackFunc(response.data);
-                        },
-                        function myError(response) {
-                            Console.log(response.statusText);
-                        }
+                    function mySuccess(response) {
+                        callbackFunc(response.data);
+                    },
+                    function myError(response) {
+                        console.log(response.statusText);
+                    }
                     );
+            }
+
+            this.sendData = function (data, callback) {
+                $http({
+                    method: "POST",
+                    url: "/grades2/",
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    },
+                    data: data
+                })
+                    .then(
+                    function mySuccess(response) {
+                        callback(response.data);
+                    },
+                    function myError(response) {
+                        console.log(response.request);
+                    }
+                    )
             }
         })
 
@@ -28,6 +51,12 @@
 
             $scope.getGrades = function () {
                 gradeService.getData(function (dataResponse) {
+                    $scope.data = dataResponse;
+                })
+            }
+
+            $scope.update = function (data) {
+                gradeService.sendData(data, function (dataResponse) {
                     $scope.data = dataResponse;
                 })
             }
@@ -45,6 +74,11 @@
                 {{'{{elem.name}}'}} {{'{{elem.grade}}'}}
             </div>
             <input type="button" ng-click="getGrades();" value="Show Grades">
+            <form>
+                <input type="text" ng-model="data.name" />
+                <input type="text" ng-model="data.grade" />
+                <input type="submit" ng-click="update(data);" value="Save" />
+            </form>
         </div>
     </div>
 
